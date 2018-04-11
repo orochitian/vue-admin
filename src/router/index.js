@@ -5,6 +5,7 @@ import Login from '../components/Login'
 import Form from '../components/page/Form'
 import Table from '../components/page/Table'
 import Error from '../components/page/Error'
+import User from '../components/page/User'
 
 Vue.use(Router);
 
@@ -28,6 +29,9 @@ export default new Router({
                 },{
                     path: '/table',
                     component: Table
+                },{
+                    path: '/user',
+                    component: User
                 },
             ]
         },

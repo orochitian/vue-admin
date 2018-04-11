@@ -1,20 +1,27 @@
 <template>
-    <el-container>
+    <el-container id="body">
         <!-- Header Start -->
         <el-header>
-            <el-dropdown placement="bottom" @command="dropDownCommand">
-                <span class="el-dropdown-link" style="color: #fff">
-                    Ryan Lee<i class="el-icon-arrow-down el-icon--right"></i>
-                </span>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>个人中心</el-dropdown-item>
-                    <el-dropdown-item>修改密码</el-dropdown-item>
-                    <el-dropdown-item divided command="logout">退出登录</el-dropdown-item>
-                </el-dropdown-menu>
-            </el-dropdown>
+            <el-row :gutter="20">
+                <el-col :span="1" class="logo-col">
+                    <router-link to="/" tag="span">Vue Admin System</router-link>
+                </el-col>
+                <el-col :span="11" :offset="8" class="user-menu">
+                    <el-dropdown placement="bottom" @command="dropDownCommand">
+                        <span class="el-dropdown-link" style="color: #fff">
+                            <i class="lnr lnr-user"></i> Ryan Lee<i class="el-icon-arrow-down el-icon--right"></i>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item command="user">个人中心</el-dropdown-item>
+                            <el-dropdown-item>修改密码</el-dropdown-item>
+                            <el-dropdown-item divided command="logout">退出登录</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </el-col>
+            </el-row>
         </el-header>
         <!-- Header End -->
-        <el-container class="right">
+        <el-container>
             <!-- Aside Start -->
             <el-aside width="230px">
                 <el-menu background-color="#393D49"
@@ -72,17 +79,17 @@
                         const loading = this.$loading({
                             lock: true,
                             text: '正在注销当前用户...',
-                            background: 'rgba(255,255,255,.8)'
+                            background: 'rgba(0,0,0,.8)',
+                            colora: '#fff'
                         });
                         setTimeout(() => {
                             loading.close();
                             that.$router.push('/login');
                         }, 2000);
-                    }).catch(() => {
-
-                    })
+                    }).catch(() => {});
+                } else if( command === 'user' ) {
+                    that.$router.push('/user');
                 }
-
             }
         }
     }
@@ -96,6 +103,13 @@
         .el-dropdown{
             line-height: normal;
         }
+        .logo-col{
+            width: 221px;
+            border-right: 1px solid #aaa;
+        }
+    }
+    .el-dropdown-menu{
+        min-width: 98px;
     }
     .el-aside {
         background-color: #23262E;
@@ -115,7 +129,13 @@
             }
         }
     }
-    .right{
+    #body{
         min-width: 1200px;
+    }
+    .user-menu{
+        text-align: right;
+        .el-dropdown{
+            cursor: pointer;
+        }
     }
 </style>
