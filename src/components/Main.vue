@@ -37,6 +37,7 @@
                     </el-submenu>
                     <el-submenu index="2">
                         <template slot="title"><i class="el-icon-menu"></i>Page Show</template>
+                        <el-menu-item index="/charts">Charts</el-menu-item>
                         <el-menu-item index="/form">Form</el-menu-item>
                         <el-menu-item index="/table">Table</el-menu-item>
                     </el-submenu>
@@ -45,6 +46,14 @@
             <!-- Aside End -->
             <!-- Main Start -->
             <el-main>
+                <div class="breadcrumb-outer">
+                    <el-breadcrumb separator="/">
+                        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+                        <el-breadcrumb-item :to="{ path: '/table' }">活动管理</el-breadcrumb-item>
+                        <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+                        <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+                    </el-breadcrumb>
+                </div>
                 <transition name="fade" mode="out-in" appear>
                     <router-view/>
                 </transition>
@@ -67,7 +76,19 @@
                 tableData: Array(1).fill(item)
             }
         },
+        created() {
+            this.isLogin();
+        },
+        beforeUpdate() {
+            this.isLogin();
+        },
         methods: {
+            //  验证登录
+            isLogin() {
+                if( !localStorage.getItem('uId') ) {
+                    this.$router.push('/login');
+                }
+            },
             dropDownCommand(command) {
                 let that = this;
                 if( command === 'logout' ) {
@@ -85,6 +106,7 @@
                         setTimeout(() => {
                             loading.close();
                             that.$router.push('/login');
+                            localStorage.removeItem('uId');
                         }, 2000);
                     }).catch(() => {});
                 } else if( command === 'user' ) {
@@ -105,8 +127,11 @@
         }
         .logo-col{
             width: 221px;
-            border-right: 1px solid #aaa;
+            border-right: 1px solid #666;
         }
+    }
+    .breadcrumb-outer{
+        margin-bottom: 30px;
     }
     .el-dropdown-menu{
         min-width: 98px;

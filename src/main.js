@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import Element from 'element-ui'
 import './scss/element-theme.scss'
+
 Vue.use(Element);
 
 Vue.config.productionTip = false;
@@ -16,3 +17,4 @@ new Vue({
     components: { App },
     template: '<App/>'
 });
+

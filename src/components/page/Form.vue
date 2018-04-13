@@ -46,7 +46,7 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="getData">立即创建</el-button>
-                    <el-button>取消</el-button>
+                    <el-button type="warning" @click="cancelForm">重置</el-button>
                 </el-form-item>
             </el-form>
         </el-col>
@@ -67,7 +67,7 @@
                     date2: '',
                     delivery: false,
                     type: [],
-                    resource: '',
+                    resource: '前端账号',
                     desc: ''
                 }
             }
@@ -76,7 +76,7 @@
             getData(ev) {
                 const loading = this.$loading({
                     lock: true,
-                    text: '添加中...',
+                    text: '账号创建中...',
                     background: 'rgba(255,255,255,.8)',
                     target: '.form-container'
                 });
@@ -89,11 +89,31 @@
                         date2: '',
                         delivery: false,
                         type: [],
-                        resource: '',
+                        resource: '前端账号',
                         desc: ''
                     }
+                    this.$message({
+                        message: '创建成功！',
+                        type: 'success'
+                    });
 
-                }, 1000);
+                }, 1500);
+            },
+            cancelForm() {
+                this.$message({
+                    message: '表单已重置',
+                    type: 'success'
+                });
+                this.form = {
+                    name: '',
+                    region: '',
+                    date1: '',
+                    date2: '',
+                    delivery: false,
+                    type: [],
+                    resource: '前端账号',
+                    desc: ''
+                }
             }
         }
     }

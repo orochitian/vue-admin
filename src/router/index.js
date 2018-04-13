@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Main from '../components/Main'
-import Login from '../components/Login'
+import Login from '../components/page/Login'
 import Form from '../components/page/Form'
 import Table from '../components/page/Table'
 import Error from '../components/page/Error'
 import User from '../components/page/User'
+import Home from '../components/page/Home'
+import Chart from '../components/page/Charts'
 
 Vue.use(Router);
 
@@ -21,8 +23,8 @@ export default new Router({
             children: [
                 {
                     path: '/',
-                    name: 'Main',
-                    component: Table
+                    name: 'Home',
+                    component: Home
                 },{
                     path: '/form',
                     component: Form
@@ -32,6 +34,9 @@ export default new Router({
                 },{
                     path: '/user',
                     component: User
+                },{
+                    path: '/charts',
+                    component: Chart
                 },
             ]
         },

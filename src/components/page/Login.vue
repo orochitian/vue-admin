@@ -4,10 +4,10 @@
             <h1>管理员登录</h1>
             <br>
             <el-form-item label="用户名">
-                <el-input v-model="form.name" placeholder="username" auto-complete="off"></el-input>
+                <el-input @keyup.native.enter="login" v-model="form.name" placeholder="username" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="密码">
-                <el-input v-model="form.password" auto-complete="off" placeholder="password"></el-input>
+                <el-input @keyup.native.enter="login" v-model="form.password" auto-complete="off" placeholder="password"></el-input>
             </el-form-item>
             <el-button type="primary" @click="login">登录</el-button>
             <br><br>
@@ -24,17 +24,25 @@
                 form: {
                     name: '',
                     password: ''
-                }
+                },
+                locked: false
             }
         },
         methods: {
-            login() {
+            login(ev) {
+                ev.target.blur();
                 if( !this.form.name || this.form.name !== 'admin' || !this.form.password || this.form.password !== 'admin' ) {
                     this.$alert('用户名或密码错误！', '提示', {
-                        type: 'error'
+                        type: 'error',
+                        callback() {
+                            setTimeout(() => {
+                                ev.target.focus();
+                            }, 300)
+                        }
                     });
                     return false;
                 }
+                localStorage.setItem('uId', 'admin');
                 this.$router.push('/');
             }
         }
