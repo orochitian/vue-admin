@@ -5,7 +5,9 @@ import App from './App'
 import router from './router'
 import Element from 'element-ui'
 import './scss/element-theme.scss'
+import animate from 'animate.css'
 
+Vue.use(animate);
 Vue.use(Element);
 
 Vue.config.productionTip = false;

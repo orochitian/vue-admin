@@ -1,5 +1,12 @@
 <template>
     <div class="login-container">
+        <div class="top-bar">
+            <div class="minMaxClose">
+                <span id="winMin" @click="winMin" class="el-icon-minus"></span>
+                <span id="winMax" @click="winMax" class="el-icon-plus"></span>
+                <span id="winClose" @click="winClose" class="el-icon-close"></span>
+            </div>
+        </div>
         <el-form class="login-form" ref="form" :model="form" label-width="80px">
             <h1>管理员登录</h1>
             <br>
@@ -17,6 +24,7 @@
 </template>
 
 <script>
+    var ipcRenderer = window.require('electron').ipcRenderer;
     export default {
         name: "Login",
         data() {
@@ -25,7 +33,8 @@
                     name: '',
                     password: ''
                 },
-                locked: false
+                locked: false,
+                winIsMax: false
             }
         },
         methods: {
@@ -42,14 +51,57 @@
                     });
                     return false;
                 }
-                localStorage.setItem('uId', 'admin');
+                sessionStorage.setItem('uId', 'admin');
                 this.$router.push('/');
+            },
+            winMin() {
+                ipcRenderer.send('win-min')
+            },
+            winMax() {
+                if( this.winIsMax ) {
+                    ipcRenderer.send('win-resize')
+                    this.winIsMax = false;
+                } else {
+                    ipcRenderer.send('win-max')
+                    this.winIsMax = true
+                }
+            },
+            winClose() {
+                ipcRenderer.send('win-close')
             }
         }
     }
 </script>
 
 <style lang="scss">
+    .minMaxClose{
+        float: right;
+        -webkit-app-region: no-drag;
+        span{
+            float: left;
+            width: 45px;
+            height: 27px;
+            color: #a0a0a0;
+            line-height: 27px;
+            text-align: center;
+            transition: .5s;
+        }
+        span:hover{
+            background: #888;
+            color: #fff;
+        }
+        #winClose:hover{
+            background: #e81123;
+        }
+    }
+    .top-bar{
+        width: 100%;
+        height: 28px;
+        line-height: 28px;
+        background-color: #23262E;
+        color: #fff;
+        -webkit-app-region: drag;
+    }
     .login-container{
         position: fixed;
         width: 100%;
